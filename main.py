@@ -1,5 +1,4 @@
 import requests
-import numpy as np
 import pandas as pd
 import re
 import time
@@ -37,17 +36,18 @@ def assemble_df(page_no):
             tag = equipment.find("a")["href"]
             equipment_type.append(tag.split("/")[2])  # extract the type of equipment
         except:
-            equipment_type.append(np.NaN)
+            equipment_type.append("")
         # equipment ID
         try:
             equipment_id.append(equipment.find("h3").get_text())
         except:
-            equipment_id.append(np.NaN)
+            equipment_id.append("")
         # image link
         try:
             image_link.append(equipment.find("a").find("img")["src"])
+            # TODO: download image code here
         except:
-            image_link.append(np.NaN)
+            image_link.append("")
         # features
         try:
             all_features = equipment.find_all("li")
@@ -60,11 +60,11 @@ def assemble_df(page_no):
                 # take out the first element and select only the characters from 2 to -1
                 first_key = first_key.lower().replace(" ", "_")
             except:
-                first_key = np.NaN
+                first_key = ""
             try:
                 first_value = all_features[0].find("strong").get_text()
             except:
-                first_value = np.NaN
+                first_value = ""
             features_dict[first_key] = first_value
 
             # second feature of the equipment, all_features[1]
@@ -72,11 +72,11 @@ def assemble_df(page_no):
                 second_key = re.findall(r"/>\D+\s\D+<", str(all_features[1]))[0][2:-1]
                 second_key = second_key.lower().replace(" ", "_")
             except:
-                second_key = np.NaN
+                second_key = ""
             try:
                 second_value = all_features[1].find("strong").get_text()
             except:
-                second_value = np.NaN
+                second_value = ""
             features_dict[second_key] = second_value
 
             # third feature of the equipment, all_features[2]
@@ -84,11 +84,11 @@ def assemble_df(page_no):
                 third_key = re.findall(r"/>\D+\s\D+<", str(all_features[2]))[0][2:-1]
                 third_key = third_key.lower().replace(" ", "_")
             except:
-                third_key = np.NaN
+                third_key = ""
             try:
                 third_value = all_features[2].find("strong").get_text()
             except:
-                third_value = np.NaN
+                third_value = ""
             features_dict[third_key] = third_value
 
             feature.append(features_dict)
@@ -97,14 +97,17 @@ def assemble_df(page_no):
             feature.append({})
             # print(ex)
 
+    feature = pd.json_normalize(feature, sep="_")
+
     df_dict = {
         "equipment_type": equipment_type,
         "equipment_id": equipment_id,
         "image_link": image_link,
-        "feature": feature,
     }
+    df = pd.DataFrame(df_dict)
+    df = pd.concat([df, feature], axis=1)
 
-    return pd.DataFrame(df_dict)
+    return df
 
 
 if __name__ == "__main__":
@@ -125,7 +128,7 @@ if __name__ == "__main__":
         print(f"ERROR: {ex}")
 
     finally:
-        data.to_csv("equipment_catalogue.csv", index=False)
+        data.to_csv("./data/equipment_data_raw.csv", index=False)
 
     end = time.time()
     time_taken = (end - start) / 3600
