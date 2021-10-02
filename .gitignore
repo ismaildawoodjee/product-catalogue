@@ -6,3 +6,5 @@ temp
 
 *.csv
 *.jpg
+
+!data/raw_csv_output.csv
