@@ -1,8 +1,12 @@
 import requests
-from bs4 import BeautifulSoup
 import numpy as np
 import pandas as pd
 import re
+import time
+
+from bs4 import BeautifulSoup
+
+start = time.time()
 
 base_url = "https://www.komatsu.com.au/equipment"
 filter_url = "?page"
@@ -26,7 +30,7 @@ def assemble_df(page_no):
     equipment_type = []
     equipment_id = []
     image_link = []
-    features = []
+    feature = []
     for equipment in equipment_container:
         # equipment type
         try:
@@ -46,45 +50,83 @@ def assemble_df(page_no):
             image_link.append(np.NaN)
         # features
         try:
-            features_dict = {}
             all_features = equipment.find_all("li")
-            
+            features_dict = {}
+
+            # using a loop here doesn't work (cannot append dictionary to a list if using a loop)
+            # first feature of the equipment, all_features[0]
             try:
                 first_key = re.findall(r"/>\D+\s\D+<", str(all_features[0]))[0][2:-1]
-                first_value = all_features[0].find("strong").get_text()
-                features_dict[first_key] = first_value
+                # take out the first element and select only the characters from 2 to -1
+                first_key = first_key.lower().replace(" ", "_")
             except:
-                features_dict[None] = None
-            
-            second_key = 'two'
-            second_value = all_features[1].find("strong").get_text()
+                first_key = np.NaN
+            try:
+                first_value = all_features[0].find("strong").get_text()
+            except:
+                first_value = np.NaN
+            features_dict[first_key] = first_value
+
+            # second feature of the equipment, all_features[1]
+            try:
+                second_key = re.findall(r"/>\D+\s\D+<", str(all_features[1]))[0][2:-1]
+                second_key = second_key.lower().replace(" ", "_")
+            except:
+                second_key = np.NaN
+            try:
+                second_value = all_features[1].find("strong").get_text()
+            except:
+                second_value = np.NaN
             features_dict[second_key] = second_value
-            
-            third_key = 'three'
-            third_value = all_features[2].find("strong").get_text()
+
+            # third feature of the equipment, all_features[2]
+            try:
+                third_key = re.findall(r"/>\D+\s\D+<", str(all_features[2]))[0][2:-1]
+                third_key = third_key.lower().replace(" ", "_")
+            except:
+                third_key = np.NaN
+            try:
+                third_value = all_features[2].find("strong").get_text()
+            except:
+                third_value = np.NaN
             features_dict[third_key] = third_value
-            
-            features.append(features_dict)
-            # features.append(re.findall(r"/>\D+\s\D+<", str(all_features)))
-            # features.append(re.findall((r">"), str(all_features)))
-            # features.append(type(str(all_features)))
+
+            feature.append(features_dict)
+
         except Exception as ex:
-            features.append(np.NaN)
-            print(ex)
+            feature.append({})
+            # print(ex)
 
-    # image_link = []
-    # for equipment in equipment_container:
-    #     tag
+    df_dict = {
+        "equipment_type": equipment_type,
+        "equipment_id": equipment_id,
+        "image_link": image_link,
+        "feature": feature,
+    }
 
-    print(equipment_type)
-    print(equipment_id)
-    print(features)
-    # print(image_link)
-    print("\n", equipment_container[0])
-    # print(len(image_link))
+    return pd.DataFrame(df_dict)
 
 
-# equipment_id
+if __name__ == "__main__":
+    i = 1
+    data = pd.DataFrame()
 
+    try:
+        while i < 8:
+            df = assemble_df(i)
+            data = pd.concat([data, df], ignore_index=True)
+            print(f"Page {i} extraction is done")
+            i += 1
 
-assemble_df(1)
+    except KeyboardInterrupt:
+        print(f"Extraction at Page {i} stopped")
+
+    except Exception as ex:
+        print(f"ERROR: {ex}")
+
+    finally:
+        data.to_csv("equipment_catalogue.csv", index=False)
+
+    end = time.time()
+    time_taken = (end - start) / 3600
+    print(f"The time taken was {time_taken} hours.")
