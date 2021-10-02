@@ -33,20 +33,35 @@ def assemble_df(page_no):
         # equipment type
         try:
             tag = equipment.find("a")["href"]
-            equipment_type.append(tag.split("/")[2])  # extract the type of equipment
-        except:
+            e_type_text = tag.split("/")[2]
+            equipment_type.append(e_type_text)  # extract the type of equipment
+        except Exception as ex:
             equipment_type.append(None)
+
         # equipment ID
         try:
-            equipment_id.append(equipment.find("h3").get_text())
-        except:
+            e_id_text = equipment.find("h3").get_text()
+            equipment_id.append(e_id_text)
+        except Exception as ex:
             equipment_id.append(None)
-        # image link - for downloading images
+
+        # download images and save them to the images folder
         try:
+            print(f"Downloading {e_type_text}_{e_id_text} image...", end="")
+
             image_link = equipment.find("a").find("img")["src"]
-            # TODO: download image code here
-        except:
-            image_link.append(None)
+            # replace backslash with a '-' so that Python won't think its a directory
+            e_id_text = e_id_text.replace("/", "-")
+
+            image_binary = requests.get(image_link)
+            with open(f"./images/{e_type_text}_{e_id_text}.jpg", "wb") as f:
+                f.write(image_binary.content)
+
+        except Exception as ex:
+            print(f"ERROR - {ex}")
+        finally:
+            print("Done")
+
         # features
         try:
             all_features = equipment.find_all("li")
@@ -58,11 +73,11 @@ def assemble_df(page_no):
                 first_key = re.findall(r"/>\D+\s\D+<", str(all_features[0]))[0][2:-1]
                 # take out the first element and select only the characters from 2 to -1
                 first_key = first_key.lower().replace(" ", "_")
-            except:
+            except Exception as ex:
                 first_key = None
             try:
                 first_value = all_features[0].find("strong").get_text()
-            except:
+            except Exception as ex:
                 first_value = None
             features_dict[first_key] = first_value
 
@@ -70,11 +85,11 @@ def assemble_df(page_no):
             try:
                 second_key = re.findall(r"/>\D+\s\D+<", str(all_features[1]))[0][2:-1]
                 second_key = second_key.lower().replace(" ", "_")
-            except:
+            except Exception as ex:
                 second_key = None
             try:
                 second_value = all_features[1].find("strong").get_text()
-            except:
+            except Exception as ex:
                 second_value = None
             features_dict[second_key] = second_value
 
@@ -82,11 +97,11 @@ def assemble_df(page_no):
             try:
                 third_key = re.findall(r"/>\D+\s\D+<", str(all_features[2]))[0][2:-1]
                 third_key = third_key.lower().replace(" ", "_")
-            except:
+            except Exception as ex:
                 third_key = None
             try:
                 third_value = all_features[2].find("strong").get_text()
-            except:
+            except Exception as ex:
                 third_value = None
             features_dict[third_key] = third_value
 
@@ -101,7 +116,6 @@ def assemble_df(page_no):
     df_dict = {
         "equipment_type": equipment_type,
         "equipment_id": equipment_id,
-        # "image_link": image_link,
     }
     df = pd.DataFrame(df_dict)
     df = pd.concat([df, feature], axis=1)
