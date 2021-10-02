@@ -43,4 +43,4 @@ to see that raw CSV data has been extracted, and several smaller files for each
 equipment are also produced.
 
 Check inside the `images` directory to see that 103 images with their proper names
-(equipment type underscore equipment ID) are downloaded.
+(equipment_type underscore equipment_id) are downloaded.

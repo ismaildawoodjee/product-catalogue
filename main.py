@@ -28,7 +28,6 @@ def assemble_df(page_no):
 
     equipment_type = []
     equipment_id = []
-    image_link = []
     feature = []
     for equipment in equipment_container:
         # equipment type
@@ -36,18 +35,18 @@ def assemble_df(page_no):
             tag = equipment.find("a")["href"]
             equipment_type.append(tag.split("/")[2])  # extract the type of equipment
         except:
-            equipment_type.append("")
+            equipment_type.append(None)
         # equipment ID
         try:
             equipment_id.append(equipment.find("h3").get_text())
         except:
-            equipment_id.append("")
-        # image link
+            equipment_id.append(None)
+        # image link - for downloading images
         try:
-            image_link.append(equipment.find("a").find("img")["src"])
+            image_link = equipment.find("a").find("img")["src"]
             # TODO: download image code here
         except:
-            image_link.append("")
+            image_link.append(None)
         # features
         try:
             all_features = equipment.find_all("li")
@@ -60,11 +59,11 @@ def assemble_df(page_no):
                 # take out the first element and select only the characters from 2 to -1
                 first_key = first_key.lower().replace(" ", "_")
             except:
-                first_key = ""
+                first_key = None
             try:
                 first_value = all_features[0].find("strong").get_text()
             except:
-                first_value = ""
+                first_value = None
             features_dict[first_key] = first_value
 
             # second feature of the equipment, all_features[1]
@@ -72,11 +71,11 @@ def assemble_df(page_no):
                 second_key = re.findall(r"/>\D+\s\D+<", str(all_features[1]))[0][2:-1]
                 second_key = second_key.lower().replace(" ", "_")
             except:
-                second_key = ""
+                second_key = None
             try:
                 second_value = all_features[1].find("strong").get_text()
             except:
-                second_value = ""
+                second_value = None
             features_dict[second_key] = second_value
 
             # third feature of the equipment, all_features[2]
@@ -84,11 +83,11 @@ def assemble_df(page_no):
                 third_key = re.findall(r"/>\D+\s\D+<", str(all_features[2]))[0][2:-1]
                 third_key = third_key.lower().replace(" ", "_")
             except:
-                third_key = ""
+                third_key = None
             try:
                 third_value = all_features[2].find("strong").get_text()
             except:
-                third_value = ""
+                third_value = None
             features_dict[third_key] = third_value
 
             feature.append(features_dict)
@@ -102,7 +101,7 @@ def assemble_df(page_no):
     df_dict = {
         "equipment_type": equipment_type,
         "equipment_id": equipment_id,
-        "image_link": image_link,
+        # "image_link": image_link,
     }
     df = pd.DataFrame(df_dict)
     df = pd.concat([df, feature], axis=1)
