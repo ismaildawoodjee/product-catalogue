@@ -1,1 +1,3 @@
 # Industrial Equipment Catalogue
+
+## Setup
