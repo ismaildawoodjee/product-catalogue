@@ -42,5 +42,8 @@ Wait until the scripts have finished running, then check inside the `data` direc
 to see that raw CSV data has been extracted (with the name `equipment_data_raw.csv`),
 and several smaller files for each type of industrial equipment are also produced.
 
+When running the data preparation script, four warnings will say that some strings
+cannot be converted to a float, but that's OK, they can be ignored.
+
 Check inside the `images` directory to see that 103 images with their proper names
 (`equipment_type` underscore `equipment_id`) are downloaded.
