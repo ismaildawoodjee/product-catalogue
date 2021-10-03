@@ -39,8 +39,8 @@ python data_preparation.py
 ```
 
 Wait until the scripts have finished running, then check inside the `data` directory
-to see that raw CSV data has been extracted, and several smaller files for each
-industrial equipment are also produced.
+to see that raw CSV data has been extracted (with the name `equipment_data_raw.csv`),
+and several smaller files for each type of industrial equipment are also produced.
 
 Check inside the `images` directory to see that 103 images with their proper names
 (`equipment_type` underscore `equipment_id`) are downloaded.

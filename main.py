@@ -7,23 +7,51 @@ from bs4 import BeautifulSoup
 
 start = time.time()
 
-base_url = "https://www.komatsu.com.au/equipment"
-filter_url = "?page"
+BASE_URL = "https://www.komatsu.com.au/equipment"
+FILTER_URL = "?page"
 
 
 def get_container(page_no):
-    """"""
-    main_url = base_url + filter_url + f"={page_no}"
+    """Gets the container holding all the item information in the page `page_no`.
+    The BeautifulSoup function parses the text response from the website URL and then
+    collects all the `div` elements that have a `class` attribute matching the
+    pattern `list__item`.
+
+    Args:
+        page_no (int): specific page number in the BASE_URL's list of equipments.
+
+    Returns:
+        container (ResultSet): a BeautifulSoup object that contains the HTML
+        elements of all 15 equipments in the page `page_no`.
+    """
+    main_url = BASE_URL + FILTER_URL + f"={page_no}"
 
     response = requests.get(url=main_url)
     soup = BeautifulSoup(markup=response.text, features="html.parser")
-    container = soup.find_all("div", attrs={"class": "list__item"})  # matches pattern
+    container = soup.find_all("div", attrs={"class": "list__item"})
 
     return container
 
 
 def assemble_df(page_no):
-    """"""
+    """Picks out the specific data from each item (equipment_type, equipment_id,
+    the three features and their values along with the units, and an image link).
+    Equipment type, ID, and image link can be extracted directly, whereas the
+    three features require regex pattern matching and a bit of processing to get
+    the correct words and characters.
+
+    The textual data are assembled into a Pandas DataFrame, and the images are
+    downloaded from the image links.
+
+    Args:
+        page_no (int): specific page number in the BASE_URL's list of equipments.
+
+    Returns:
+        df (DataFrame): a Pandas DataFrame assembled after extracting, processing
+        and combining the scraped data.
+
+        Images are also written out as `jpg` files into the `images` folder.
+    """
     equipment_container = get_container(page_no)
 
     equipment_type = []
@@ -34,7 +62,7 @@ def assemble_df(page_no):
         try:
             tag = equipment.find("a")["href"]
             e_type_text = tag.split("/")[2]
-            equipment_type.append(e_type_text)  # extract the type of equipment
+            equipment_type.append(e_type_text)
         except Exception as ex:
             equipment_type.append(None)
 
@@ -54,8 +82,8 @@ def assemble_df(page_no):
             e_id_text = e_id_text.replace("/", "-")
 
             image_binary = requests.get(image_link)
-            with open(f"./images/{e_type_text}_{e_id_text}.jpg", "wb") as f:
-                f.write(image_binary.content)
+            with open(f"./images/{e_type_text}_{e_id_text}.jpg", "wb") as file:
+                file.write(image_binary.content)
 
         except Exception as ex:
             print(f"ERROR - {ex}")
@@ -70,8 +98,8 @@ def assemble_df(page_no):
             # using a loop here doesn't work (cannot append dictionary to a list if using a loop)
             # first feature of the equipment, all_features[0]
             try:
-                first_key = re.findall(r"/>\D+\s\D+<", str(all_features[0]))[0][2:-1]
                 # take out the first element and select only the characters from 2 to -1
+                first_key = re.findall(r"/>\D+\s\D+<", str(all_features[0]))[0][2:-1]
                 first_key = first_key.lower().replace(" ", "_")
             except Exception as ex:
                 first_key = None
@@ -109,7 +137,6 @@ def assemble_df(page_no):
 
         except Exception as ex:
             feature.append({})
-            # print(ex)
 
     feature = pd.json_normalize(feature, sep="_")
 
@@ -124,6 +151,17 @@ def assemble_df(page_no):
 
 
 if __name__ == "__main__":
+    """Loops through all 7 pages from the BASE_URL, starting from the first page,
+    and after initializing an empty DataFrame. Each dataframe extracted from each
+    page is concatenated to the previous one and the final output is written as
+    a CSV file into the `data` folder.
+
+    If the process is interrupted for some reason (Ctrl + C) or due to some error,
+    the dataframe held in memory is still saved to the `data` folder. For very large
+    loops (e.g. 1000s to 10,000s of pages) this makes it ideal to resume from where
+    you left off when you encounter an exception, and all the data that was scraped
+    before does not get lost.
+    """
     i = 1
     data = pd.DataFrame()
 
