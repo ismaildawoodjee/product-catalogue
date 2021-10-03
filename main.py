@@ -12,17 +12,17 @@ FILTER_URL = "?page"
 
 
 def get_container(page_no):
-    """Gets the container holding all the item information in the page `page_no`.
+    """Gets the container holding all the item information in the page 'page_no'.
     The BeautifulSoup function parses the text response from the website URL and then
-    collects all the `div` elements that have a `class` attribute matching the
-    pattern `list__item`.
+    collects all the 'div' elements that have a 'class' attribute matching the
+    pattern 'list__item'.
 
     Args:
         page_no (int): specific page number in the BASE_URL's list of equipments.
 
     Returns:
         container (ResultSet): a BeautifulSoup object that contains the HTML
-        elements of all 15 equipments in the page `page_no`.
+        elements of all 15 equipments in the page 'page_no'.
     """
     main_url = BASE_URL + FILTER_URL + f"={page_no}"
 
@@ -50,7 +50,7 @@ def assemble_df(page_no):
         df (DataFrame): a Pandas DataFrame assembled after extracting, processing
         and combining the scraped data.
 
-        Images are also written out as `jpg` files into the `images` folder.
+    Downloaded images are also written out as 'jpg' files into the 'images' folder.
     """
     equipment_container = get_container(page_no)
 
@@ -78,7 +78,7 @@ def assemble_df(page_no):
             print(f"Downloading {e_type_text}_{e_id_text} image...", end="")
 
             image_link = equipment.find("a").find("img")["src"]
-            # replace backslash with a '-' so that Python won't think its a directory
+            # replace '/' with a '-' so that Python won't think its a directory
             e_id_text = e_id_text.replace("/", "-")
 
             image_binary = requests.get(image_link)
@@ -154,10 +154,10 @@ if __name__ == "__main__":
     """Loops through all 7 pages from the BASE_URL, starting from the first page,
     and after initializing an empty DataFrame. Each dataframe extracted from each
     page is concatenated to the previous one and the final output is written as
-    a CSV file into the `data` folder.
+    a CSV file into the 'data' folder.
 
     If the process is interrupted for some reason (Ctrl + C) or due to some error,
-    the dataframe held in memory is still saved to the `data` folder. For very large
+    the dataframe held in memory is still saved to the 'data' folder. For very large
     loops (e.g. 1000s to 10,000s of pages) this makes it ideal to resume from where
     you left off when you encounter an exception, and all the data that was scraped
     before does not get lost.
@@ -167,7 +167,7 @@ if __name__ == "__main__":
 
     try:
         while i < 8:
-            df = assemble_df(i)
+            df = assemble_df(page_no=i)
             data = pd.concat([data, df], ignore_index=True)
             print(f"Page {i} extraction is done")
             i += 1
