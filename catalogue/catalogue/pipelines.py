@@ -47,7 +47,7 @@ class CataloguePipeline:
         data_keys.append("equipment_id")
 
         data_values = []
-        equipment_type = item["equipment_url"][2]
+        equipment_type = item["equipment_url"][4]
         equipment_id = item["equipment_url"][-1]
 
         data_values.append(equipment_type)
