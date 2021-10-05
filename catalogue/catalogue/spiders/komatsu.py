@@ -35,20 +35,14 @@ class KomatsuSpider(scrapy.Spider):
         next_page = response.css("li.pager__next > a::attr(href)").get()
         next_page_url = response.urljoin(next_page)
 
-        # scrapy will filter duplicates, no need to check for them
-        if next_page_url is not None:  # and next_page_url != response.url:
+        if next_page_url is not None and next_page_url != response.url:
             yield scrapy.Request(next_page_url, callback=self.parse)
 
     def get_specifications(self, response):
-        # TODO: get all specs
-        # specifications = response.css("ul.spec__list")
-        # for head in specifications.css("div > h4"):
-        #     spec_head
-
         item = CatalogueItem()
 
-        # get equipment_type and equipment_id as items
-        item["equipment_type"] = response.url.split("/")[-1]
-        item["equipment_id"] = response.url.split("/")[-3]
+        # send these items to the pipeline, where they can be processed
+        item["equipment_url"] = response.url.split("/")
+        item["specifications"] = response.css("ul.spec__list")
 
         yield item

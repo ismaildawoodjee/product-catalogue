@@ -76,9 +76,9 @@ DEFAULT_REQUEST_HEADERS = sh.get_dict(headers)
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-# ITEM_PIPELINES = {
-#    'catalogue.pipelines.CataloguePipeline': 300,
-# }
+ITEM_PIPELINES = {
+    "catalogue.pipelines.CataloguePipeline": 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html

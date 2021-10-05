@@ -4,7 +4,10 @@ __pycache__
 
 temp
 
+*.txt
 *.csv
+*.json
 *.jpg
 
 !data/raw_csv_output.csv
+!data/raw_equipment_specifications.json

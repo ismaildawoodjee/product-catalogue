@@ -8,6 +8,5 @@ import scrapy
 
 class CatalogueItem(scrapy.Item):
     # define the fields for your item here like:
-    equipment_type = scrapy.Field()
-    equipment_id = scrapy.Field()
-    
+    equipment_url = scrapy.Field()
+    specifications = scrapy.Field()
