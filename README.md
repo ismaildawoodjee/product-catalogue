@@ -1,5 +1,11 @@
 # Industrial Equipment Catalogue
 
+- [Industrial Equipment Catalogue](#industrial-equipment-catalogue)
+  - [Instructions](#instructions)
+    - [Scraping Equipment Specifications (with Scrapy, get detailed specifications)](#scraping-equipment-specifications-with-scrapy-get-detailed-specifications)
+    - [Simple Scraping Scripts (without Scrapy, only the main page)](#simple-scraping-scripts-without-scrapy-only-the-main-page)
+  - [Using Scrapy](#using-scrapy)
+
 ## Instructions
 
 (**Tip:** Change `.com` to `.dev` to see the VSCode interface on your web browser.
