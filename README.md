@@ -40,10 +40,18 @@ data from each equipment's page.
 
 ### Scraping Equipment Specifications (with Scrapy, get detailed specifications)
 
-Go inside the `catalogue` folder (to be able to run Scrapy commands):
+Go inside the first `catalogue` folder, (to be able to run Scrapy commands):
 
 ```sh
 cd catalogue
+```
+
+The current directory should now be `product-catalogue/catalogue`, not
+`product-catalogue/catalogue/catalogue`:
+
+```sh
+$ ls
+catalogue/  process_data.py  scrapy.cfg
 ```
 
 Let the `komatsu` spider crawl each equipment's page for the specifications data:
