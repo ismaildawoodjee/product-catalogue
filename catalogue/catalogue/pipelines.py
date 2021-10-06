@@ -6,68 +6,54 @@
 
 # useful for handling different item types with a single interface
 from itemadapter import ItemAdapter
-
 from w3lib.html import remove_tags
 from unidecode import unidecode
-import html
-import json
-import re
-import os
 
-current_dir = os.getcwd()
+import pandas as pd
+import html
+import re
 
 
 class CataloguePipeline:
 
-    data = {}
-    data["records"] = []
+    data = pd.DataFrame()
 
     def clean_string(self, string):
         string = remove_tags(string)
         string = re.sub(r"[\r\n\t]", "", string)
         string = unidecode(string)
-        final_string = html.unescape(string)
+        return html.unescape(string)
 
-        return final_string
+    def process_table(self, html_table):
+        table = pd.read_html(html_table)[0]
+        return table
 
     def process_item(self, item, spider):
-        record = self._process_item(item, spider)
-
-        with open(
-            os.path.join(current_dir, "..", "data/raw_equipment_specifications.json"),
-            mode="w",
-            encoding="utf-8",
-        ) as file:
-            self.data["records"].append(record)
-            json.dump(self.data, file)
+        df = self._process_item(item, spider)
+        self.data = pd.concat([self.data, df], axis=1, ignore_index=False)
+        self.data.to_csv("../data/raw_equipment_specifications.csv", index=False)
 
     def _process_item(self, item, spider):
-        data_keys = []
-        data_keys.append("equipment_type")
-        data_keys.append("equipment_id")
-
-        data_values = []
         equipment_type = item["equipment_url"][4]
         equipment_id = item["equipment_url"][-1]
-
-        data_values.append(equipment_type)
-        data_values.append(equipment_id)
-
         specifications = item["specifications"]
 
-        for html_table in specifications.css("div.spec__detail tbody"):
-            table_row = html_table.css("tr")
+        df = pd.DataFrame()
 
-            for row in table_row:
-                spec = row.css("td").getall()
+        for html_table in specifications.css("li.spec__list-item table").getall():
+            table = self.process_table(html_table, item)
+            df = pd.concat([df, table], axis=0, ignore_index=True)
 
-                try:
-                    data_keys.append(self.clean_string(spec[0]))
-                except Exception as ex:
-                    data_keys.append(self.clean_string("NA"))
-                try:
-                    data_values.append(self.clean_string(spec[1]))
-                except Exception as ex:
-                    data_keys.append(self.clean_string("NA"))
+        try:
+            col_names = []
+            for idx in range(len(df.columns)):
+                if idx == 0:
+                    col_names.append(f"{equipment_type}_{equipment_id}")
+                else:
+                    col_names.append(f"{equipment_type}_{equipment_id}_specs-{idx}")
+            df.columns = col_names
 
-        return dict(zip(data_keys, data_values))
+        except Exception as ex:
+            print(f"ERROR - {ex} on {equipment_type}_{equipment_id}")
+
+        return df

@@ -11,3 +11,4 @@ temp
 
 !data/raw_csv_output.csv
 !data/raw_equipment_specifications.json
+!data/raw_equipment_specifications.csv
