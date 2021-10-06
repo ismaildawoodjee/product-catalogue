@@ -25,13 +25,12 @@ class CataloguePipeline:
         return html.unescape(string)
 
     def process_table(self, html_table):
-        table = pd.read_html(html_table)[0]
-        return table
+        return pd.read_html(html_table)[0]
 
     def process_item(self, item, spider):
         df = self._process_item(item, spider)
         self.data = pd.concat([self.data, df], axis=1, ignore_index=False)
-        self.data.to_csv("../data/raw_equipment_specifications.csv", index=False)
+        self.data.to_csv("../data/equipment_specifications_raw.csv", index=False)
 
     def _process_item(self, item, spider):
         equipment_type = item["equipment_url"][4]
