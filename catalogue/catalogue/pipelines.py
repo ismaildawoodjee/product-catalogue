@@ -41,7 +41,7 @@ class CataloguePipeline:
         df = pd.DataFrame()
 
         for html_table in specifications.css("li.spec__list-item table").getall():
-            table = self.process_table(html_table, item)
+            table = self.process_table(html_table)
             df = pd.concat([df, table], axis=0, ignore_index=True)
 
         try:
@@ -50,7 +50,7 @@ class CataloguePipeline:
                 if idx == 0:
                     col_names.append(f"{equipment_type}_{equipment_id}")
                 else:
-                    col_names.append(f"{equipment_type}_{equipment_id}_specs-{idx}")
+                    col_names.append(f"{equipment_type}_{equipment_id}_SPECS-{idx}")
             df.columns = col_names
 
         except Exception as ex:
