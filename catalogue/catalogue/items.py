@@ -10,3 +10,4 @@ class CatalogueItem(scrapy.Item):
     # define the fields for your item here like:
     equipment_url = scrapy.Field()
     specifications = scrapy.Field()
+    image_link = scrapy.Field()

@@ -1,5 +1,4 @@
 import pandas as pd
-import os
 import re
 
 EQUIPMENT_COLS = {
@@ -32,6 +31,12 @@ def split_equipment_types(df):
         equipment_df.to_csv(f"../data/{equipment_type}.csv", index=False)
         
 
+def union_specifications():
+    df = pd.read_csv("../data/backhoe.csv")
+    print(df)
+
+
 if __name__ == "__main__":
     sorted_df = sort_by_colnames(df=df)
     split_equipment_types(sorted_df)
+    # union_specifications()

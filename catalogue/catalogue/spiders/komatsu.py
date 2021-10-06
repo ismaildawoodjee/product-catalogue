@@ -44,5 +44,6 @@ class KomatsuSpider(scrapy.Spider):
         # send these items to the pipeline, where they can be processed
         item["equipment_url"] = response.url.split("/")
         item["specifications"] = response.css("ul.spec__list")
+        item["image_link"] = response.css("div.detail__img img::attr(src)").get()
 
         yield item

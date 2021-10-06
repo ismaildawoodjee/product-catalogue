@@ -10,6 +10,7 @@ from w3lib.html import remove_tags
 from unidecode import unidecode
 
 import pandas as pd
+import requests
 import html
 import re
 
@@ -31,6 +32,14 @@ class CataloguePipeline:
         df = self._process_item(item, spider)
         self.data = pd.concat([self.data, df], axis=1, ignore_index=False)
         self.data.to_csv("../data/equipment_specifications_raw.csv", index=False)
+        
+        # download image from each equipment's page
+        image_binary = requests.get(item["image_link"])
+        equipment_type = item["equipment_url"][4]
+        equipment_id = item["equipment_url"][-1]
+        
+        with open(f"../images/{equipment_type}_{equipment_id}.jpg", "wb") as file:
+            file.write(image_binary.content)
 
     def _process_item(self, item, spider):
         equipment_type = item["equipment_url"][4]

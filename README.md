@@ -2,6 +2,9 @@
 
 ## Instructions
 
+(**Tip:** Change `.com` to `.dev` to see the VSCode interface on your web browser.
+Cannot run terminal commands on the browser though.)
+
 Clone this repository:
 
 ```sh
@@ -31,6 +34,36 @@ python -m pip install -U wheel setuptools
 pip install -r requirements.txt
 ```
 
+At this point, the simple scraping scripts can be run to get data from the main
+equipments page, or the Scrapy spider can be used to extract equipment specifications
+data from each equipment's page.
+
+### Scraping Equipment Specifications (with Scrapy, get detailed specifications)
+
+Go inside the `catalogue` folder (to be able to run Scrapy commands):
+
+```sh
+cd catalogue
+```
+
+Let the `komatsu` spider crawl each equipment's page for the specifications data:
+
+```sh
+scrapy crawl komatsu
+```
+
+When this is done, check inside the `data` directory to see `equipment_specifications_raw.csv`
+has been extracted and 103 images has been downloaded into the `images` directory.
+Process the specifications data with:
+
+```sh
+python process_data.py
+```
+
+Several smaller files for each type of industrial equipment will be produced.
+
+### Simple Scraping Scripts (without Scrapy, only the main page)
+
 Run the Python scripts in this order:
 
 ```sh
@@ -48,7 +81,7 @@ cannot be converted to a float, but that's OK, they can be ignored.
 Check inside the `images` directory to see that 103 images with their proper names
 (`equipment_type` underscore `equipment_id`) are downloaded.
 
-## Using Scrapy Spider to Crawl Product Specifications
+## Using Scrapy
 
 **Setup:** Start a Scrapy project and go inside the folder using the commands:
 
