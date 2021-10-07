@@ -1,5 +1,7 @@
 # Industrial Equipment Catalogue
 
+[![build](https://github.com/ismaildawoodjee/product-catalogue/actions/workflows/workflow.yml/badge.svg)](https://github.com/ismaildawoodjee/product-catalogue/actions/workflows/workflow.yml)
+
 - [Industrial Equipment Catalogue](#industrial-equipment-catalogue)
   - [Instructions](#instructions)
     - [Scraping Equipment Specifications (with Scrapy, get detailed specifications)](#scraping-equipment-specifications-with-scrapy-get-detailed-specifications)
