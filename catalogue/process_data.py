@@ -29,14 +29,36 @@ def split_equipment_types(df):
         equipment_df = df.loc[:, equipment_cols]
         equipment_df.dropna(axis=0, how="all", inplace=True)
         equipment_df.to_csv(f"../data/{equipment_type}.csv", index=False)
-        
 
-def union_specifications():
-    df = pd.read_csv("../data/backhoe.csv")
-    print(df)
+
+def union_specification_keys():
+    df = pd.read_csv("../data/motor-graders.csv")
+
+    no_specs = [list(df.columns).index(col) for col in df.columns if "SPECS" not in col]
+
+    for start, end in zip(no_specs[:-1], no_specs[1:]):
+        item_df = df.iloc[:, start:end]
+        item_df.dropna(axis=0, how="all", inplace=True)
+        # df.reindex()
+
+        print(item_df)
+        # i += 1
+
+    # print(i)
+    # print(start, end)
+
+    # for  in no_specs:
+    #     for idx in no_specs:
+    #         print(idx, idx)
+    # print(df.iloc[:,idx:])
+
+    # print(df.iloc[:,no_specs])
+
+    # for col in df.columns:
+    #     if "SPECS" not in
 
 
 if __name__ == "__main__":
     sorted_df = sort_by_colnames(df=df)
     split_equipment_types(sorted_df)
-    # union_specifications()
+    # union_specification_keys()

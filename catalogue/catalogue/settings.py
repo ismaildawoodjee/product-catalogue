@@ -20,6 +20,10 @@ NEWSPIDER_MODULE = "catalogue.spiders"
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
 
+# Logging - to keep a record of the scraping process
+# LOG_ENABLED = True
+# LOG_FILE = "../logs/komatsu.log"
+
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 # CONCURRENT_REQUESTS = 32
 
