@@ -29,14 +29,19 @@ class CataloguePipeline:
             file.write(image_binary.content)
 
     def process_table(self, header, detail):
-        # check if there is actually a table; if not, just get the <p>'s text
-        if detail.css("table").get() is not None:
-            html_table = detail.css("table").get()
-            df = pd.read_html(html_table)[0]
+        # check if there are actually tables; if not, just get the <p>'s text
+        if detail.css("table").getall():
+            for table in detail.css("table").getall():
+                df = pd.read_html(table)[0]
+                yield self.process_dataframe(df=df, header=header)
+        elif detail.css("p::text").getall():
+            for text in detail.css("p::text").getall():
+                df = pd.DataFrame([text])
+                yield self.process_dataframe(df=df, header=header)
         else:
-            text = detail.css("p::text").get()
-            df = pd.DataFrame([text])
+            yield self.process_dataframe(df=pd.DataFrame([""]), header=header)
 
+    def process_dataframe(self, df, header):
         # check if all elements in each row are identical; if so make them empty except the first
         for row_idx in range(df.shape[0]):
             # convert to list with `.values`
@@ -44,7 +49,12 @@ class CataloguePipeline:
             if len(set(row)) == 1:
                 df.iloc[row_idx, 1:] = None
 
+        # remove NaN in the second pass, cannot remove in the first pass
         df.iloc[:, 0] = [f"{header} | {item}" for item in df.iloc[:, 0]]
+        df.iloc[:, 0] = [
+            f"{header} | " if item[-1:-4:-1] == "nan" else item
+            for item in df.iloc[:, 0]
+        ]
         return df
 
     def _process_item(self, item, spider):
@@ -59,8 +69,10 @@ class CataloguePipeline:
         for header, detail in zip(
             specifications.css(header_css).getall(), specifications.css(detail_css)
         ):
-            table = self.process_table(header, detail)
-            df = pd.concat([df, table], axis=0, ignore_index=True)
+            # generator object - turn this into a list and iterate over it
+            gen_table = self.process_table(header, detail)
+            for table in list(gen_table):
+                df = pd.concat([df, table], axis=0, ignore_index=True)
 
         try:
             col_names = []
