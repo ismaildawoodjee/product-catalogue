@@ -1,27 +1,27 @@
 skidsteer_sk714-5,skidsteer_sk714-5_SPECS-1,skidsteer_sk820-5sf,skidsteer_sk820-5sf_SPECS-1
-Engine: Model,Komatsu 4D88E-1FD,Engine: Model,Komatsu S4D84E-1FD
-"Engine: Horsepower, - SAE J1349 (kW)",34.7,"Engine: Horsepower, - SAE J1349 (kW)",38.9
-"Engine: Horsepower, Net - 80/1269/EC",34,"Engine: Horsepower, Net - 80/1269/EC",38
-Engine: Number of cylinders,4,Engine: Number of cylinders,4
-Operation Weight: Operating weight - total (kg),2530,Operation Weight: Operating weight - total (kg),2940
-Loader: Bucket capacity (m3),0.35,Loader: Bucket capacity (m3),0.4
-Loader: Dump height,2140.0,Loader: Dump height,2280.0
-Loader: Bucket width (mm),1550.0,Loader: Bucket width (mm),1730.0
-Loader: Bucket breakout force (kgf),1750.0,Loader: Bucket breakout force (kgf),1950.0
-Hydraulic System: Hydraulic pump type,Gear,Hydraulic System: Hydraulic pump type,Gear
-Hydraulic System: System pressure (bar),191,Hydraulic System: System pressure (bar),210
-Hydraulic System: Flow (litre/min),62,Hydraulic System: Flow (litre/min),62
-Dimensions: Length (mm),3200,Dimensions: Length (mm),3350
-Dimensions: Width (mm),1550,Dimensions: Width (mm),1730
-Dimensions: Height (mm),1960,Dimensions: Height (mm),2000
-Service Information: Fuel tank (litre),​53,Service Information: Fuel tank (litre),53
-Communications System: KOMTRAX Satellite tracking,Yes,Communications System: KOMTRAX Satellite tracking,Yes
-Standard Fitment: ENGINE & RELATED ITEMS,- Komatsu 4D88E-1FD engine.  - Double element air cleaner with pre cleaner.  - Vertical side by side coolers.,Standard Fitment: ENGINE & RELATED ITEMS,- Komatsu S4D84E-1FD engine.  - Double element air cleaner with pre cleaner.  - Vertical side by side coolers
-Standard Fitment: ELECTRICAL SYSTEM,"- Alternator, 12 Volt 40 Ampere.  - Batteries, 1 x 12 Volt, 80 Ah.  - Starting Motor, 12 Volt.",Standard Fitment: ELECTRICAL SYSTEM,"- Alternator, 12 Volt 40 Ampere.  - Batteries, 1 x 12 Volt, 80 Ah.  - Starting Motor, 12 Volt."
-Standard Fitment: TRANSMISSION,- Two speed hydrostatic transmission.  - Dual variable displacement pumps driving axial piston motors,Standard Fitment: TRANSMISSION,- Two speed hydrostatic transmission.  - Dual variable displacement pumps driving axial piston motors.
-Standard Fitment: TYRES,- 10 x 16.5 8 ply rating  - Spare rim and tyre,Standard Fitment: TYRES,- 10 x 16.5 8 ply rating  - Spare rim and tyre
-Standard Fitment: HYDRAULICS & CONTROLS,- Komatsu Closed-center Load Sensing System (CLSS).  - Auxiliary circuit for attachments.,Standard Fitment: HYDRAULICS & CONTROLS,- Komatsu Closed-center Load Sensing System (CLSS).  - Auxiliary circuit for attachments.  - Additional 'Super Flow' circuit for high flow attachments
-Standard Fitment: OPERATOR ENVIRONMENT,"- ROPS/FOPS cabin with side guards.  - Seat, suspension type with safety switch.  - Retractable seat belt.  - Safety bar with built in gauges and safety switch.  - Servo controls for direction and loader actuation.  - Bucket float.  - Horn.  - Travel alarm.  - Hand and foot throttle.",Standard Fitment: OPERATOR ENVIRONMENT,"- ROPS/FOPS cabin with side guards.  - Seat, suspension type with safety switch.  - Retractable seat belt.  - Safety bar with built in gauges and safety switch.  - Servo controls for direction and loader actuation.  - Bucket float.  - Horn.  - Travel alarm.  - Hand and foot throttle."
-Standard Fitment: OTHER STANDARD EQUIPMENT,"- Wiring for rear lights.  - Painting, Komatsu standard colouring.  - Tilt over cabin for ease of servicing.  - Komatsu Machine Tracking System, (KOMTRAX).",Standard Fitment: OTHER STANDARD EQUIPMENT,"- Wiring for rear lights.  - Painting, Komatsu standard colouring.  - Tilt over cabin for ease of servicing.  - Komatsu Machine Tracking System, (KOMTRAX)."
-Standard Fitment: LOADER,- Multi purpose bucket.  - Universal quick coupler.,Standard Fitment: LOADER,- Multi-purpose bucket.  - Universal quick coupler.  - Vertical lift arm design.
-Standard Fitment: MATERIALS,"- Operators manual  - Parts manual  ""Specification is subject to change without notice""",Standard Fitment: MATERIALS,"- Operators manual  - Parts manual  ""Specification is subject to change without notice"""
+Engine | Model,Komatsu 4D88E-1FD,Engine | Model,Komatsu S4D84E-1FD
+"Engine | Horsepower, - SAE J1349 (kW)",34.7,"Engine | Horsepower, - SAE J1349 (kW)",38.9
+"Engine | Horsepower, Net - 80/1269/EC",34,"Engine | Horsepower, Net - 80/1269/EC",38
+Engine | Number of cylinders,4,Engine | Number of cylinders,4
+Operation Weight | Operating weight - total (kg),2530,Operation Weight | Operating weight - total (kg),2940
+Loader | Bucket capacity (m3),0.35,Loader | Bucket capacity (m3),0.4
+Loader | Dump height,2140.0,Loader | Dump height,2280.0
+Loader | Bucket width (mm),1550.0,Loader | Bucket width (mm),1730.0
+Loader | Bucket breakout force (kgf),1750.0,Loader | Bucket breakout force (kgf),1950.0
+Hydraulic System | Hydraulic pump type,Gear,Hydraulic System | Hydraulic pump type,Gear
+Hydraulic System | System pressure (bar),191,Hydraulic System | System pressure (bar),210
+Hydraulic System | Flow (litre/min),62,Hydraulic System | Flow (litre/min),62
+Dimensions | Length (mm),3200,Dimensions | Length (mm),3350
+Dimensions | Width (mm),1550,Dimensions | Width (mm),1730
+Dimensions | Height (mm),1960,Dimensions | Height (mm),2000
+Service Information | Fuel tank (litre),​53,Service Information | Fuel tank (litre),53
+Communications System | KOMTRAX Satellite tracking,Yes,Communications System | KOMTRAX Satellite tracking,Yes
+Standard Fitment | ENGINE & RELATED ITEMS,- Komatsu 4D88E-1FD engine.  - Double element air cleaner with pre cleaner.  - Vertical side by side coolers.,Standard Fitment | ENGINE & RELATED ITEMS,- Komatsu S4D84E-1FD engine.  - Double element air cleaner with pre cleaner.  - Vertical side by side coolers
+Standard Fitment | ELECTRICAL SYSTEM,"- Alternator, 12 Volt 40 Ampere.  - Batteries, 1 x 12 Volt, 80 Ah.  - Starting Motor, 12 Volt.",Standard Fitment | ELECTRICAL SYSTEM,"- Alternator, 12 Volt 40 Ampere.  - Batteries, 1 x 12 Volt, 80 Ah.  - Starting Motor, 12 Volt."
+Standard Fitment | TRANSMISSION,- Two speed hydrostatic transmission.  - Dual variable displacement pumps driving axial piston motors,Standard Fitment | TRANSMISSION,- Two speed hydrostatic transmission.  - Dual variable displacement pumps driving axial piston motors.
+Standard Fitment | TYRES,- 10 x 16.5 8 ply rating  - Spare rim and tyre,Standard Fitment | TYRES,- 10 x 16.5 8 ply rating  - Spare rim and tyre
+Standard Fitment | HYDRAULICS & CONTROLS,- Komatsu Closed-center Load Sensing System (CLSS).  - Auxiliary circuit for attachments.,Standard Fitment | HYDRAULICS & CONTROLS,- Komatsu Closed-center Load Sensing System (CLSS).  - Auxiliary circuit for attachments.  - Additional 'Super Flow' circuit for high flow attachments
+Standard Fitment | OPERATOR ENVIRONMENT,"- ROPS/FOPS cabin with side guards.  - Seat, suspension type with safety switch.  - Retractable seat belt.  - Safety bar with built in gauges and safety switch.  - Servo controls for direction and loader actuation.  - Bucket float.  - Horn.  - Travel alarm.  - Hand and foot throttle.",Standard Fitment | OPERATOR ENVIRONMENT,"- ROPS/FOPS cabin with side guards.  - Seat, suspension type with safety switch.  - Retractable seat belt.  - Safety bar with built in gauges and safety switch.  - Servo controls for direction and loader actuation.  - Bucket float.  - Horn.  - Travel alarm.  - Hand and foot throttle."
+Standard Fitment | OTHER STANDARD EQUIPMENT,"- Wiring for rear lights.  - Painting, Komatsu standard colouring.  - Tilt over cabin for ease of servicing.  - Komatsu Machine Tracking System, (KOMTRAX).",Standard Fitment | OTHER STANDARD EQUIPMENT,"- Wiring for rear lights.  - Painting, Komatsu standard colouring.  - Tilt over cabin for ease of servicing.  - Komatsu Machine Tracking System, (KOMTRAX)."
+Standard Fitment | LOADER,- Multi purpose bucket.  - Universal quick coupler.,Standard Fitment | LOADER,- Multi-purpose bucket.  - Universal quick coupler.  - Vertical lift arm design.
+Standard Fitment | MATERIALS,"- Operators manual  - Parts manual  ""Specification is subject to change without notice""",Standard Fitment | MATERIALS,"- Operators manual  - Parts manual  ""Specification is subject to change without notice"""

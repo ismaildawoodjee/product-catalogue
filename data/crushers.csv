@@ -1,42 +1,42 @@
 crushers_br380jg-1e0,crushers_br380jg-1e0_SPECS-1
-Engine: Model,Komatsu SAAD107E-1
-Engine: Type,"4-cycle, water-cooled, overhead valve, turbocharged diesel engine"
-Engine: Aspiration,"Turbocharged, air to air aftercooled"
-Engine: No. Cylinders,6
-Engine: Bore,107 mm
-Engine: Stroke,124 mm
-Engine: Piston Displacement,6.69 ltr
-"Engine: Horsepower, Gross",149 kW / 200 HP
-"Engine: Horsepower, Net",140 kW / 187 HP
-Engine: Rated RPM,2050
-Engine: Emissions certified,EPA Tier 3
-Hydraulic System: Type,HydrauMind system
-Hydraulic System: Main pump type,Variable-displacement piston pumps
-Hydraulic System: Maximum flow,2 x 230 ltr/min
-Hydraulic System: Maximum pressure,380 kg/cm2
-Hydraulic System: Maximum travel speed,3 km/h
-Hydraulic System: System oil flow,
-Hydraulic System: Travel,2 x 160 ltr/min
-Hydraulic System: Crusher,230 ltr/min
-Hydraulic System: Feeder,58 ltr/min
-Hydraulic System: Conveyor,38 ltr/min
-Hydraulic System: Option,28 ltr/min
-Operating weight: Operating weight,"3,400 kg"
-Undercarriage: Seal of track,Sealed track
-Undercarriage: Track adjuster,Hydraulic
-Undercarriage: Number of shoes (each side),45
-Undercarriage: Number of carrier rollers (each side),2
-Undercarriage: Number of track rollers (each side),5
-Crusher: Jaw,Komatsu KCJ4222
-Crusher: Inlet size,1065 mm x 550 mm
-Crusher: Discharge setting (O.S.S),50 mm to 150 mm
-Crusher: Rotating speed (variable),170 - 330 rpm
-Grizzly feeder: Frequency,Maximum 1100 cpm
-Grizzly feeder: Size,1000 mm x 3070 mm
-"Grizzly feeder: Amplitude (not loaded, all amplitude)",8.0 mm
-Grizzly feeder: Drive type,Direct drive with hydraulic motor
-Coolant & Lubricant capacity: Fuel tank,400 ltr
-Coolant & Lubricant capacity: Radiator,28 ltr
-Coolant & Lubricant capacity: Engine,26 ltr
-"Coolant & Lubricant capacity: Final drive, each side",4.5 ltr
-Coolant & Lubricant capacity: Hydraulic system,209 ltr
+Engine | Model,Komatsu SAAD107E-1
+Engine | Type,"4-cycle, water-cooled, overhead valve, turbocharged diesel engine"
+Engine | Aspiration,"Turbocharged, air to air aftercooled"
+Engine | No. Cylinders,6
+Engine | Bore,107 mm
+Engine | Stroke,124 mm
+Engine | Piston Displacement,6.69 ltr
+"Engine | Horsepower, Gross",149 kW / 200 HP
+"Engine | Horsepower, Net",140 kW / 187 HP
+Engine | Rated RPM,2050
+Engine | Emissions certified,EPA Tier 3
+Hydraulic System | Type,HydrauMind system
+Hydraulic System | Main pump type,Variable-displacement piston pumps
+Hydraulic System | Maximum flow,2 x 230 ltr/min
+Hydraulic System | Maximum pressure,380 kg/cm2
+Hydraulic System | Maximum travel speed,3 km/h
+Hydraulic System | System oil flow,
+Hydraulic System | Travel,2 x 160 ltr/min
+Hydraulic System | Crusher,230 ltr/min
+Hydraulic System | Feeder,58 ltr/min
+Hydraulic System | Conveyor,38 ltr/min
+Hydraulic System | Option,28 ltr/min
+Operating weight | Operating weight,"3,400 kg"
+Undercarriage | Seal of track,Sealed track
+Undercarriage | Track adjuster,Hydraulic
+Undercarriage | Number of shoes (each side),45
+Undercarriage | Number of carrier rollers (each side),2
+Undercarriage | Number of track rollers (each side),5
+Crusher | Jaw,Komatsu KCJ4222
+Crusher | Inlet size,1065 mm x 550 mm
+Crusher | Discharge setting (O.S.S),50 mm to 150 mm
+Crusher | Rotating speed (variable),170 - 330 rpm
+Grizzly feeder | Frequency,Maximum 1100 cpm
+Grizzly feeder | Size,1000 mm x 3070 mm
+"Grizzly feeder | Amplitude (not loaded, all amplitude)",8.0 mm
+Grizzly feeder | Drive type,Direct drive with hydraulic motor
+Coolant & Lubricant capacity | Fuel tank,400 ltr
+Coolant & Lubricant capacity | Radiator,28 ltr
+Coolant & Lubricant capacity | Engine,26 ltr
+"Coolant & Lubricant capacity | Final drive, each side",4.5 ltr
+Coolant & Lubricant capacity | Hydraulic system,209 ltr

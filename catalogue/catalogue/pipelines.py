@@ -6,43 +6,14 @@
 
 # useful for handling different item types with a single interface
 from itemadapter import ItemAdapter
-from w3lib.html import remove_tags
-from unidecode import unidecode
 
 import pandas as pd
 import requests
-import html
-import re
 
 
 class CataloguePipeline:
 
     data = pd.DataFrame()
-
-    def clean_string(self, string):
-        string = remove_tags(string)
-        string = re.sub(r"[\r\n\t]", "", string)
-        string = unidecode(string)
-        return html.unescape(string)
-
-    def process_table(self, header, detail):
-        # check if there is actually a table; if not, just get the <p>'s text
-        if detail.css("table").get() is not None:
-            html_table = detail.css("table").get()
-            df = pd.read_html(html_table)[0]
-        else:
-            text = detail.css("p::text").get()
-            df = pd.DataFrame([text])
-
-        # check if all elements in each row are identical; if so make them empty except the first
-        for row_idx in range(df.shape[0]):
-            # convert to list with ``.values`
-            row = df.iloc[row_idx, :].values
-            if len(set(row)) == 1:
-                df.iloc[row_idx, 1:] = None
-
-        df.iloc[:, 0] = [f"{header}: {item}" for item in df.iloc[:, 0]]
-        return df
 
     def process_item(self, item, spider):
         df = self._process_item(item, spider)
@@ -56,6 +27,25 @@ class CataloguePipeline:
 
         with open(f"../images/{equipment_type}_{equipment_id}.jpg", "wb") as file:
             file.write(image_binary.content)
+
+    def process_table(self, header, detail):
+        # check if there is actually a table; if not, just get the <p>'s text
+        if detail.css("table").get() is not None:
+            html_table = detail.css("table").get()
+            df = pd.read_html(html_table)[0]
+        else:
+            text = detail.css("p::text").get()
+            df = pd.DataFrame([text])
+
+        # check if all elements in each row are identical; if so make them empty except the first
+        for row_idx in range(df.shape[0]):
+            # convert to list with `.values`
+            row = df.iloc[row_idx, :].values
+            if len(set(row)) == 1:
+                df.iloc[row_idx, 1:] = None
+
+        df.iloc[:, 0] = [f"{header} | {item}" for item in df.iloc[:, 0]]
+        return df
 
     def _process_item(self, item, spider):
         equipment_type = item["equipment_url"][4]
