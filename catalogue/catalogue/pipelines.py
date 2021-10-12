@@ -36,7 +36,7 @@ class CataloguePipeline:
                 yield self.process_dataframe(df=df, header=header)
         elif detail.css("p::text").getall():
             for text in detail.css("p::text").getall():
-                df = pd.DataFrame([text])
+                df = pd.DataFrame(["", text])
                 yield self.process_dataframe(df=df, header=header)
         else:
             yield self.process_dataframe(df=pd.DataFrame([""]), header=header)
@@ -50,11 +50,12 @@ class CataloguePipeline:
                 df.iloc[row_idx, 1:] = None
 
         # remove NaN in the second pass, cannot remove in the first pass
-        df.iloc[:, 0] = [f"{header} | {item}" for item in df.iloc[:, 0]]
-        df.iloc[:, 0] = [
-            f"{header} | " if item[-1:-4:-1] == "nan" else item
-            for item in df.iloc[:, 0]
-        ]
+        df.insert(loc=0, column="header", value=header)
+        # df.iloc[:, 0] = [f"{header} | {item}" for item in df.iloc[:, 0]]
+        # df.iloc[:, 0] = [
+        #     f"{header} | " if item[-1:-4:-1] == "nan" else item
+        #     for item in df.iloc[:, 0]
+        # ]
         return df
 
     def _process_item(self, item, spider):
