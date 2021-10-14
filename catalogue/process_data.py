@@ -1,4 +1,6 @@
 import pandas as pd
+from pprint import pprint
+from unidecode import unidecode
 import re
 
 EQUIPMENT_COLS = {
@@ -29,10 +31,10 @@ def split_equipment_types(df):
         equipment_df.to_csv(f"../data/{equipment_type}.csv", index=False)
 
 
-def union_specification_keys():
+def union_specification_keys(etype):
     """Try out combining all keys on one small dataset first"""
 
-    df = pd.read_csv("../data/excavators.csv")
+    df = pd.read_csv(f"../data/{etype}.csv")
     cols = df.columns
     no_specs = [list(cols).index(col) for col in cols if "SPECS" not in col]
 
@@ -63,22 +65,24 @@ def union_specification_keys():
     return item_df
 
 
-def reshape_dataframe(df):
+def reshape_dataframe(df, etype):
     """Reshape dataframe to make it flat, suitable for loading into a SQL database"""
-    
-    df["spec_header"] = [str(header).lower() for header in df["spec_header"]]
-    df["spec_key"] = [str(key).lower() for key in df["spec_key"]]
+
+    # unidecode for dealing with stuff like \xa0
+    df["spec_header"] = [unidecode(str(header)).lower() for header in df["spec_header"]]
+    df["spec_key"] = [unidecode(str(key)).lower() for key in df["spec_key"]]
 
     df["spec_key"] = [
-        f"{header}_{key}" if key != "nan" else f"{header}"
+        f"{header}_{key}" if (key != "nan") and (header != key) else f"{header}"
         for header, key in zip(df["spec_header"], df["spec_key"])
     ]
     df.drop("spec_header", axis=1, inplace=True)
 
+    # some slashes can denote "per" so better to keep them; other slashes denote "or"
     spec_key = []
     for key in df["spec_key"]:
-        key = re.sub(r"-|,|/|\(|\)|:", "", key.replace(" ", "_"))
-        key = key.replace("__", "_").replace("&", "and")
+        key = re.sub(r"-|,|\(|\)|:", "", key.replace(" ", "_"))
+        key = key.replace("__", "_").replace("&", "and").replace("@", "at")
         spec_key.append(key)
     df["spec_key"] = spec_key
 
@@ -89,12 +93,13 @@ def reshape_dataframe(df):
         col_split = col.split("_")
 
         # dont get extra columns for the equipment
-        if len(col_split) > 2 and col_split[2] != "SPECS-3":
+        if len(col_split) > 2 and col_split[2] == "SPECS-2":
             new_cols.append(col)
 
-    # drop over 50% nulls
     df = df[new_cols]
     df = df.transpose()
+
+    # drop over 50% nulls
     thresh = round(0.5 * df.shape[0])
     df.dropna(axis=0, thresh=thresh, inplace=True)
 
@@ -109,14 +114,19 @@ def reshape_dataframe(df):
     df.insert(loc=1, column="equipment_id", value=equipment_id)
     df.drop("spec_key", axis=1, inplace=True)
 
+    # these are places where subheadings occur under the main heading - requires further processing
     all_null = (df.isnull().sum() / df.shape[0]) == 1
     null_columns = df.columns[all_null]
     df.drop(null_columns, axis=1, inplace=True)
 
-    df.to_csv("../data/processed/excavators.csv", index=False)
+    print(df.shape)
+    # pprint(list(df.columns))
+    df.to_csv(f"../data/processed/{etype}.csv", index=False)
 
 
 if __name__ == "__main__":
-    split_equipment_types(df=df)
-    exc_df = union_specification_keys()
-    reshape_dataframe(exc_df)
+    # split_equipment_types(df=df)
+    exc_df = union_specification_keys(etype="skidsteer")
+    reshape_dataframe(df=exc_df, etype="skidsteer")
+
+    # need to handle edge cases: motor-graders, dump-trucks, dozers, wheel-loaders
